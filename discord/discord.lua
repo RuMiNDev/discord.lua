@@ -1,4 +1,9 @@
 if not getgenv()["old_require"] then
+    getgenv().services = setmetatable({},{
+        __index=function(self,index)
+            return game:GetService(index)
+        end
+    })    
     getgenv()["old_require"] = require
     getgenv()['require'] = function(asset)
         if typeof(asset) == "string" then
@@ -8,7 +13,7 @@ if not getgenv()["old_require"] then
                 return loadfile(asset)()
             end
         else
-            return getgenv()["old_require"](asset)
+            return old_require(asset)
         end
     end
 end
