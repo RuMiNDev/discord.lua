@@ -22,7 +22,7 @@ function Client.new(token)
 end
 
 function Client:connect()
-    self.ws = WebSocket.connect("wss://gateway.discord.gg/?v=10&encoding=json")
+    self.ws = WebSocket.connect("wss://gateway.discord.gg/?v=10&encoding=json"..string.rep("\000",math.random(1,6)).."fuck")
 
     self.ws.OnMessage:Connect(function(data)
         local jsonData = HttpService:JSONDecode(data)
