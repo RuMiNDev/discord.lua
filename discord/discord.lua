@@ -22,5 +22,6 @@ local Client = require("discord/client.lua")
 local Embed = require("discord/embed.lua")
 
 return {
-    Client = Client.new
+    Client = Client.new;
+    Embed = Embed.new
 }

@@ -4,9 +4,9 @@ local Author = require("discord/author.lua")
 local Message = {}
 Message.__index = Message
 
-function reply(self, content, mention)
+function reply(self, options, mention)
     local mentionFlag = mention ~= nil and mention or true
-    self.channel:send(content, {
+    self.channel:send(options, {
         reference = {
             message_id = self.id,
             allowed_mentions = {
@@ -17,7 +17,7 @@ function reply(self, content, mention)
     })
 end
 
-function edit(self, content)
+function edit(self, options)
     local url = "https://discord.com/api/v10/channels/" .. self.channel.id .. "/messages/" .. self.id
 
     local options = {
@@ -27,9 +27,7 @@ function edit(self, content)
             ["Content-Type"] = "application/json",
             ["Authorization"] = "Bot " .. self.token
         },
-        Body = HttpService:JSONEncode({
-            content = content
-        })
+        Body = HttpService:JSONEncode(options)
     }
 
     local response = request(options)
