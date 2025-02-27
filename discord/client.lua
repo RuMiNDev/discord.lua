@@ -64,7 +64,6 @@ function Client:sendHeartbeat()
     })
 
     self.ws:Send(heartbeatPayload)
-    print("Heartbeat sent at: " .. os.time())
 end
 
 function Client:identify()
@@ -82,20 +81,18 @@ function Client:identify()
     })
 
     self.ws:Send(identifyPayload)
-    print("Identify payload sent")
 end
 
 function Client:on(event, callback)
     if self.events[event] then
         self.events[event]:Connect(callback)
     else
-        error("Unsupported event: " .. event)
+        -- error("Unsupported event: " .. event)
     end
 end
 
 function Client:reconnect()
     self.ws:Close()
-    print("Reconnecting to Discord Gateway...")
     self:connect()
 end
 

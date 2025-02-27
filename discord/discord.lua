@@ -19,6 +19,7 @@ if not getgenv()["old_require"] then
 end
 
 local Client = require("discord/client.lua")
+local Embed = require("discord/embed.lua")
 
 return {
     Client = Client.new
