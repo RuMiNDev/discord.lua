@@ -87,7 +87,7 @@ function Client:on(event, callback)
     if self.events[event] then
         self.events[event]:Connect(callback)
     else
-        -- error("Unsupported event: " .. event)
+        error("Unsupported event: " .. event)
     end
 end
 
