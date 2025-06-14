@@ -8,7 +8,7 @@ if not getgenv()["old_require"] then
     getgenv()['require'] = function(asset)
         if typeof(asset) == "string" then
             if not isfile(asset) then
-                return loadstring(game:HttpGet("https://raw.githubusercontent.com/xsinew/discord.lua/refs/heads/main/"..asset))()
+                return loadstring(game:HttpGet("https://raw.githubusercontent.com/RuMiNDev/discord.lua/refs/heads/main/"..asset))()
             else
                 return loadfile(asset)()
             end
