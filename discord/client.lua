@@ -96,4 +96,50 @@ function Client:reconnect()
     self:connect()
 end
 
+-- 챗지피티로 간단하게 수정한겁니다.
+
+-- Create a channel in a guild (optionally inside a category)
+function Client:create_channel(guild_id, name, channel_type, parent_id)
+    local url = "https://discord.com/api/v10/guilds/"..guild_id.."/channels"
+    local body = { name = name, type = channel_type or 0 }
+    if parent_id then body.parent_id = parent_id end
+    local resp = request({
+        Method = "POST",
+        Url = url,
+        Headers = {
+            ["Content-Type"] = "application/json",
+            ["Authorization"] = "Bot "..self.token
+        },
+        Body = HttpService:JSONEncode(body)
+    })
+    if resp.status_code == 201 then
+        return true, HttpService:JSONDecode(resp.Body or resp.body)
+    else
+        return false, resp
+    end
+end
+
+-- Create a category in a guild
+function Client:create_category(guild_id, name)
+    return self:create_channel(guild_id, name, 4)
+end
+
+-- Delete a channel or category by ID
+function Client:delete_channel(channel_id)
+    local url = "https://discord.com/api/v10/channels/"..channel_id
+    local resp = request({
+        Method = "DELETE",
+        Url = url,
+        Headers = {
+            ["Authorization"] = "Bot "..self.token
+        }
+    })
+    return resp.status_code == 204
+end
+
+-- Alias for deleting a category (same endpoint)
+function Client:delete_category(category_id)
+    return self:delete_channel(category_id)
+end
+
 return Client
